@@ -10,7 +10,6 @@ import gobile.boomesh.com.gobile.developer.DeveloperSettingsModule;
  * Created by sumesh on 12/24/15.
  */
 
-@SuppressWarnings("unused")
 @Component(
         modules = {
                 AppModule.class,
