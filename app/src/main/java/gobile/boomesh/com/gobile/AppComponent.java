@@ -5,10 +5,12 @@ import gobile.boomesh.com.gobile.base.BaseFragment;
 import gobile.boomesh.com.gobile.developer.DeveloperSettingsModule;
 
 /**
- * Required for Dagger to map modles
- * <p/>
+ * Required for Dagger to map modules (and injection)
+ * <p>
  * Created by sumesh on 12/24/15.
  */
+
+@SuppressWarnings("unused")
 @Component(
         modules = {
                 AppModule.class,
