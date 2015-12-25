@@ -5,7 +5,8 @@ import android.app.Application;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
- * Custom override class of {@link Application}, for DI, potential other libraries
+ * Custom override class of {@link Application}, for DI purposes, potential usages of other
+ * libraries.
  * Created by sumesh on 12/24/15.
  */
 public class App extends Application {
