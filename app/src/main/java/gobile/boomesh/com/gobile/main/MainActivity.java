@@ -1,6 +1,7 @@
 package gobile.boomesh.com.gobile.main;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,13 +11,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
+import butterknife.Bind;
 import gobile.boomesh.com.gobile.BuildConfig;
 import gobile.boomesh.com.gobile.R;
 import gobile.boomesh.com.gobile.base.BaseFragment;
@@ -95,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        @Bind(R.id.section_label)
+        TextView textView;
+
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -110,8 +113,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
-            TextView textView = (TextView) view.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+        }
+
+        @NonNull
+        @Override
+        public String getFragmentTag() {
+            return PlaceholderFragment.class.getSimpleName();
+        }
+
+        @Override
+        protected int getLayoutResID() {
+            return R.layout.fragment_main;
         }
     }
 

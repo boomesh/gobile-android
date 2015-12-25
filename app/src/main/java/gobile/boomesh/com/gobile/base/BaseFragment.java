@@ -1,6 +1,7 @@
 package gobile.boomesh.com.gobile.base;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -40,7 +41,7 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = super.onCreateView(inflater, container, savedInstanceState);
+        final View view = inflater.inflate(getLayoutResID(), container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -64,4 +65,12 @@ public abstract class BaseFragment extends Fragment {
      */
     @NonNull
     public abstract String getFragmentTag();
+
+    /**
+     * Fragment view layout should be provided here
+     *
+     * @return an xml layout resource ID
+     */
+    @LayoutRes
+    protected abstract int getLayoutResID();
 }

@@ -10,7 +10,7 @@ import butterknife.ButterKnife;
  * Put only generic activity related code here.  No specific implementation should go in here.
  * <p>
  * Subclasses will use:
- * - Butterknife
+ * - {@link ButterKnife}
  * <p>
  * Created by sumesh on 12/25/15.
  */
