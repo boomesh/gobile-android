@@ -17,7 +17,6 @@ import dagger.Provides;
  */
 @Module
 class AppModule {
-    @SuppressWarnings("unused")
     @Provides
     @Singleton
     SharedPreferences providesSharedPreferences(@NonNull final Application application) {

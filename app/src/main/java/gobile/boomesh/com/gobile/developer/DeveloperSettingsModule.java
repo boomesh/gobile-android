@@ -8,6 +8,7 @@ import com.squareup.leakcanary.RefWatcher;
 import dagger.Module;
 import dagger.Provides;
 import gobile.boomesh.com.gobile.App;
+import gobile.boomesh.com.gobile.BuildConfig;
 
 /**
  * Insert developer specific setup/access to parts of developer-specific details here.  Code here
@@ -21,10 +22,9 @@ public class DeveloperSettingsModule {
     private final RefWatcher refWatcher;
 
     public DeveloperSettingsModule(@NonNull final App app) {
-        this.refWatcher = LeakCanary.install(app);
+        this.refWatcher = BuildConfig.DEBUG ? LeakCanary.install(app) : RefWatcher.DISABLED;
     }
 
-    @SuppressWarnings("unused")
     @NonNull
     @Provides
     RefWatcher providesRefWatcher() {
