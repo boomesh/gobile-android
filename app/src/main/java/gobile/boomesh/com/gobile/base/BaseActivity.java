@@ -8,13 +8,14 @@ import butterknife.ButterKnife;
 
 /**
  * Put only generic activity related code here.  No specific implementation should go in here.
- * <p>
+ * <p/>
  * Subclasses will use:
  * - {@link ButterKnife}
- * <p>
+ * <p/>
  * Created by sumesh on 12/25/15.
  */
 public abstract class BaseActivity extends AppCompatActivity {
+
 
     /**
      * Life cycle methods
@@ -37,6 +38,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      *
      * @return the layout id of the content view
      */
+    //TODO remove warning
+    @SuppressWarnings("SameReturnValue")
     @LayoutRes
     protected abstract int getContentViewLayoutID();
 }

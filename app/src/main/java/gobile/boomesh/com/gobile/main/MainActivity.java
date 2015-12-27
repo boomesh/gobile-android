@@ -1,5 +1,6 @@
 package gobile.boomesh.com.gobile.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import butterknife.Bind;
 import gobile.boomesh.com.gobile.BuildConfig;
 import gobile.boomesh.com.gobile.R;
 import gobile.boomesh.com.gobile.base.BaseFragment;
+import gobile.boomesh.com.gobile.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            //Open Settings activity
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
