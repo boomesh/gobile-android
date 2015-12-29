@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">GOBile</string>
-    <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- Settings -->
+    <string name="action_settings">Settings</string>
+    <string name="settings_label_leak_canary">Leak Canary</string>
 
     <!-- LeakCanary -->
     <string name="__leak_canary_display_activity_label">GOBile Leaks</string>

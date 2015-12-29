@@ -1,6 +1,5 @@
 package gobile.boomesh.com.gobile;
 
-import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -12,14 +11,25 @@ import dagger.Provides;
 
 /**
  * Should only contain generic, app related dependencies.
- * <p>
+ * <p/>
  * Created by sumesh on 12/24/15.
  */
 @Module
 class AppModule {
-    @Provides
+
+    private final App app;
+
+    public AppModule(@NonNull final App app) {
+        this.app = app;
+    }
+
     @Singleton
-    SharedPreferences providesSharedPreferences(@NonNull final Application application) {
-        return PreferenceManager.getDefaultSharedPreferences(application);
+    private App getAppInstance() {
+        return app;
+    }
+
+    @Provides
+    SharedPreferences providesSharedPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(getAppInstance());
     }
 }

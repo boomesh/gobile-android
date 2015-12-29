@@ -18,7 +18,7 @@ import gobile.boomesh.com.gobile.App;
 
 /**
  * Used to override, and setup the most basic of libraries (e.g. LeakCanary, or google analytics)
- * <p>
+ * <p/>
  * Created by sumesh on 12/24/15.
  */
 public abstract class BaseFragment extends Fragment {
@@ -33,14 +33,14 @@ public abstract class BaseFragment extends Fragment {
      */
 
     @Override
-    public final void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.get(getContext()).getAppComponent().inject(this);
     }
 
     @Nullable
     @Override
-    public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(getLayoutResID(), container, false);
         ButterKnife.bind(this, view);
         return view;
