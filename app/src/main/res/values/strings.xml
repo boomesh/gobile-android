@@ -6,6 +6,9 @@
     <string name="action_settings">Settings</string>
     <string name="settings_label_leak_canary">Leak Canary</string>
 
+    <!-- DEBUG -->
+    <string name="debug_toast_restart_app">You must restart %s app to see changes.</string>
+
     <!-- LeakCanary -->
     <string name="__leak_canary_display_activity_label">GOBile Leaks</string>
 </resources>

@@ -56,14 +56,6 @@ public class SettingsFragment extends BaseViewModelFragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if (settingsViewModel != null) {
-            settingsViewModel.refreshView();
-        }
-    }
-
 
     /**
      * {@link butterknife.ButterKnife} methods

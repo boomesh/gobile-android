@@ -6,10 +6,12 @@ import android.databinding.Bindable;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import gobile.boomesh.com.gobile.App;
+import gobile.boomesh.com.gobile.Consts;
 import gobile.boomesh.com.gobile.R;
 import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModel;
 
@@ -19,8 +21,9 @@ import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModel;
  * Created by sumesh on 12/29/15.
  */
 public class SettingsViewModel extends BaseViewModel {
-    private static final String TAG = SettingsViewModel.class.getSimpleName();
-    private static final String PREFS_LEAK_CANARY_ON = TAG + ".leak_canary_on";
+
+    @NonNull
+    private final Context appContext;
 
     @Inject
     SharedPreferences preferences;
@@ -28,17 +31,19 @@ public class SettingsViewModel extends BaseViewModel {
     public SettingsViewModel(@NonNull final Context context,
                              @Nullable final BaseState savedViewState) {
         super(savedViewState);
+        appContext = context.getApplicationContext();
         App.get(context).getAppComponent().inject(this);
     }
 
     public void onLeakCanaryCheckedChanged(boolean isChecked) {
-        final SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(PREFS_LEAK_CANARY_ON, isChecked);
-        editor.apply();
-    }
+        final String appName = appContext.getString(R.string.app_name);
+        final String restartString = appContext.getString(R.string.debug_toast_restart_app);
+        final String toastContent = String.format(restartString, appName);
+        Toast.makeText(appContext, toastContent, Toast.LENGTH_SHORT).show();
 
-    public void refreshView() {
-        notifyPropertyChanged(R.id.leak_canary_sw);
+        final SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(Consts.PREFS_LEAK_CANARY_ON, isChecked);
+        editor.apply();
     }
 
 
@@ -48,7 +53,7 @@ public class SettingsViewModel extends BaseViewModel {
 
     @Bindable
     public boolean isLeakCanaryOn() {
-        return preferences.getBoolean(PREFS_LEAK_CANARY_ON, false);
+        return preferences.getBoolean(Consts.PREFS_LEAK_CANARY_ON, false);
     }
 
 
