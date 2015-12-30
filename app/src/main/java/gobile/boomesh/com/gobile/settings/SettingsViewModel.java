@@ -35,7 +35,11 @@ public class SettingsViewModel extends BaseViewModel {
         App.get(context).getAppComponent().inject(this);
     }
 
-    public void onLeakCanaryCheckedChanged(boolean isChecked) {
+    public void onLeakCanaryCheckedChanged(final boolean isChecked) {
+        if (isLeakCanaryOn() == isChecked) {
+            return;
+        }
+
         final String appName = appContext.getString(R.string.app_name);
         final String restartString = appContext.getString(R.string.debug_toast_restart_app);
         final String toastContent = String.format(restartString, appName);
