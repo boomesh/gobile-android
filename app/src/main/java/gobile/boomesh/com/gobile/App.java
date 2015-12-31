@@ -4,6 +4,8 @@ package gobile.boomesh.com.gobile;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 
 import gobile.boomesh.com.gobile.developer.DeveloperSettingsModule;
 
@@ -17,8 +19,7 @@ public class App extends Application {
     /**
      * instantiated in {@link #onCreate()}
      */
-    @SuppressWarnings("NullableProblems")
-    @NonNull
+    @Nullable
     private AppComponent appComponent;
 
     /**
@@ -33,20 +34,6 @@ public class App extends Application {
         return (App) context.getApplicationContext();
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        final AppModule appModule = new AppModule(this);
-
-        appComponent = DaggerAppComponent.builder()
-                .appModule(appModule)
-                .developerSettingsModule(
-                        new DeveloperSettingsModule(
-                                this,
-                                appModule.providesSharedPreferences()))
-                .build();
-    }
-
     /**
      * Can use this to help inject members.
      *
@@ -54,6 +41,40 @@ public class App extends Application {
      */
     @NonNull
     public AppComponent getAppComponent() {
+        if (appComponent == null) {
+            final AppModule appModule = createAppModule();
+
+            appComponent = DaggerAppComponent.builder()
+                    .appModule(appModule)
+                    .developerSettingsModule(createDevSettingsModule(appModule))
+                    .build();
+        }
         return appComponent;
+    }
+
+    /**
+     * This method is made so that unit testing can provide a custom {@link AppModule} module
+     *
+     * @return an {@link AppModule} instance
+     */
+    @VisibleForTesting
+    @NonNull
+    protected AppModule createAppModule() {
+        return new AppModule(this);
+    }
+
+    /**
+     * This method is made so that unit testing can provide a custom {@link DeveloperSettingsModule}
+     * module
+     *
+     * @param appModule a {@link AppModule} instance, with properly configured SharedPreferences
+     * @return a {@link DeveloperSettingsModule} instance
+     */
+    @VisibleForTesting
+    @NonNull
+    protected DeveloperSettingsModule createDevSettingsModule(@NonNull final AppModule appModule) {
+        return new DeveloperSettingsModule(
+                this,
+                appModule.providesSharedPreferences());
     }
 }

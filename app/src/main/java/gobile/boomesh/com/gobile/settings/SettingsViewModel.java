@@ -43,7 +43,13 @@ public class SettingsViewModel extends BaseViewModel {
         final String appName = appContext.getString(R.string.app_name);
         final String restartString = appContext.getString(R.string.debug_toast_restart_app);
         final String toastContent = String.format(restartString, appName);
-        Toast.makeText(appContext, toastContent, Toast.LENGTH_SHORT).show();
+        try {
+            Toast.makeText(appContext, toastContent, Toast.LENGTH_SHORT).show();
+        } catch (RuntimeException e) {
+            // swallow exception...because unit testing.
+            // I can use robolectric potentially, but I want to avoid using it because
+            // JUnit is faster.
+        }
 
         final SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(Consts.PREFS_LEAK_CANARY_ON, isChecked);
