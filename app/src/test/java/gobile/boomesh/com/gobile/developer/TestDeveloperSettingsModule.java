@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import gobile.boomesh.com.gobile.App;
 
 /**
+ * Overriding this class for completeness purposes.
  * Created by sumesh on 12/30/15.
  */
 public class TestDeveloperSettingsModule extends DeveloperSettingsModule {

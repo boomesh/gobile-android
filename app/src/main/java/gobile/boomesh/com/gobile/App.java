@@ -59,7 +59,7 @@ public class App extends Application {
      */
     @VisibleForTesting
     @NonNull
-    protected AppModule createAppModule() {
+    AppModule createAppModule() {
         return new AppModule(this);
     }
 
@@ -72,7 +72,7 @@ public class App extends Application {
      */
     @VisibleForTesting
     @NonNull
-    protected DeveloperSettingsModule createDevSettingsModule(@NonNull final AppModule appModule) {
+    DeveloperSettingsModule createDevSettingsModule(@NonNull final AppModule appModule) {
         return new DeveloperSettingsModule(
                 this,
                 appModule.providesSharedPreferences());

@@ -19,6 +19,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
+ * Functional tests for {@link SettingsViewModel}
+ * <p/>
  * Created by sumesh on 12/30/15.
  */
 public class SettingsViewModelTest {
@@ -51,8 +53,8 @@ public class SettingsViewModelTest {
         testOnLeakCanaryCheckedChanged(false, false);
     }
 
-    public void testOnLeakCanaryCheckedChanged(final boolean isChecked,
-                                               final boolean savedIsCheckedBoolean) {
+    private void testOnLeakCanaryCheckedChanged(final boolean isChecked,
+                                                final boolean savedIsCheckedBoolean) {
         final SharedPreferences.Editor editor = mock(SharedPreferences.Editor.class);
         when(prefs.edit()).thenReturn(editor);
         when(prefs.getBoolean(TestConsts.PREFS_LEAK_CANARY_ON, false))

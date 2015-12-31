@@ -1,6 +1,8 @@
 package gobile.boomesh.com.gobile;
 
 /**
+ * Add most test constants for this class.  Can utilize {@link Consts} as well through this class.
+ * <p/>
  * Created by sumesh on 12/30/15.
  */
 public class TestConsts extends Consts {

@@ -5,9 +5,11 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 /**
+ * Class is overridden to provide a custom shared preferences.
+ * <p/>
  * Created by sumesh on 12/30/15.
  */
-public class TestAppModule extends AppModule {
+class TestAppModule extends AppModule {
     public TestAppModule(@NonNull App app) {
         super(app);
     }

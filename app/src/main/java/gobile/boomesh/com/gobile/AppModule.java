@@ -24,7 +24,7 @@ class AppModule {
     }
 
     @Singleton
-    protected App getAppInstance() {
+    App getAppInstance() {
         return app;
     }
 
