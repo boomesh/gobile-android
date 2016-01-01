@@ -10,6 +10,8 @@ import android.view.View;
 
 import butterknife.Bind;
 import gobile.boomesh.com.gobile.R;
+import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModel;
+import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModelActivity;
 
 /**
  * Only have one fragment in this class.  Purpose is to make sure UI is using fragments, and tablet
@@ -17,7 +19,7 @@ import gobile.boomesh.com.gobile.R;
  * <p/>
  * Created by sumesh on 12/25/15.
  */
-public abstract class BaseSingleFragmentActivity extends BaseActivity {
+public abstract class BaseSingleFragmentActivity extends BaseViewModelActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -103,7 +105,7 @@ public abstract class BaseSingleFragmentActivity extends BaseActivity {
     }
 
     /**
-     * {@link BaseActivity} methods
+     * {@link BaseViewModelActivity} methods
      */
 
     /**
@@ -112,5 +114,13 @@ public abstract class BaseSingleFragmentActivity extends BaseActivity {
     @Override
     protected final int getContentViewLayoutID() {
         return R.layout.activity_base_single_fragment;
+    }
+
+
+    @Nullable
+    @Override
+    protected BaseViewModel createViewModel(BaseViewModel.BaseState savedViewModelState) {
+        // By default, no view model
+        return null;
     }
 }

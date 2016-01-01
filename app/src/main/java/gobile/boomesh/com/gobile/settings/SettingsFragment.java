@@ -86,8 +86,8 @@ public class SettingsFragment extends BaseViewModelFragment {
 
     @Nullable
     @Override
-    protected BaseViewModel createViewModel(@Nullable BaseViewModel.BaseState savedViewModel) {
-        settingsViewModel = new SettingsViewModel(getContext(), savedViewModel);
+    protected BaseViewModel createViewModel(@Nullable BaseViewModel.BaseState savedViewModelState) {
+        settingsViewModel = new SettingsViewModel(getContext(), savedViewModelState);
         return settingsViewModel;
     }
 }
