@@ -86,7 +86,7 @@ public class MainViewModel extends BaseViewModel {
     private enum SectionType {
         Favourites(R.drawable.ic_star_white, PlaceholderFragment.newInstance(1)),
         Home(R.drawable.ic_directions_bus_white, PlaceholderFragment.newInstance(2)),
-        Status(R.drawable.ic_http_white, PlaceholderFragment.newInstance(3));
+        Status(R.drawable.ic_info_white, PlaceholderFragment.newInstance(3));
 
         @DrawableRes
         private final int tabIcon;
