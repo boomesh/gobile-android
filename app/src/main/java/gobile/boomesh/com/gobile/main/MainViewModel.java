@@ -13,6 +13,9 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.Bind;
 import gobile.boomesh.com.gobile.R;
 import gobile.boomesh.com.gobile.base.BaseFragment;
@@ -84,17 +87,15 @@ public class MainViewModel extends BaseViewModel {
      */
 
     private enum SectionType {
-        Favourites(R.drawable.ic_star_white, PlaceholderFragment.newInstance(1)),
-        Home(R.drawable.ic_directions_bus_white, PlaceholderFragment.newInstance(2)),
-        Status(R.drawable.ic_info_white, PlaceholderFragment.newInstance(3));
+        Favourites(R.drawable.ic_star_white),
+        Home(R.drawable.ic_directions_bus_white),
+        Status(R.drawable.ic_info_white);
 
         @DrawableRes
         private final int tabIcon;
-        private final BaseFragment sectionFragment;
 
-        SectionType(@DrawableRes final int tabIcon, @NonNull final BaseFragment fragment) {
+        SectionType(@DrawableRes final int tabIcon) {
             this.tabIcon = tabIcon;
-            this.sectionFragment = fragment;
         }
     }
 
@@ -153,7 +154,7 @@ public class MainViewModel extends BaseViewModel {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+        public static BaseFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -180,8 +181,11 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
         private final SectionType[] sections = SectionType.values();
+        private final List<BaseFragment> pages = Arrays.asList(
+                PlaceholderFragment.newInstance(1),
+                PlaceholderFragment.newInstance(2),
+                PlaceholderFragment.newInstance(3));
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -189,7 +193,7 @@ public class MainViewModel extends BaseViewModel {
 
         @Override
         public Fragment getItem(int position) {
-            return sections[position].sectionFragment;
+            return pages.get(position);
         }
 
         @Override
