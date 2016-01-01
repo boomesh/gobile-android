@@ -2,8 +2,10 @@ package gobile.boomesh.com.gobile.main;
 
 import android.os.Bundle;
 import android.os.Parcel;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -24,12 +26,16 @@ import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModel;
 public class MainViewModel extends BaseViewModel {
 
     private final FragmentManager fragmentManager;
+    @NonNull
+    private final TabLayout tabLayout;
     private SectionsPagerAdapter pagerAdapter;
 
     MainViewModel(@Nullable final BaseState savedViewState,
-                  @NonNull final FragmentManager supportFragmentManager) {
+                  @NonNull final FragmentManager supportFragmentManager,
+                  @NonNull final TabLayout tabLayout) {
         super(savedViewState);
         this.fragmentManager = supportFragmentManager;
+        this.tabLayout = tabLayout;
     }
 
     /**
@@ -54,6 +60,43 @@ public class MainViewModel extends BaseViewModel {
         return new MainViewState(this);
     }
 
+    /**
+     * Refresh the tabs (after they have been set)
+     */
+    public void refreshTabs() {
+        final int tabCount = tabLayout.getTabCount();
+        if (tabCount == 0) {
+            return;
+        }
+
+        final SectionType[] sections = SectionType.values();
+        for (int i = 0; i < tabCount; i++) {
+            final TabLayout.Tab tab = tabLayout.getTabAt(i);
+            if (tab != null) {
+                tab.setIcon(sections[i].tabIcon);
+            }
+        }
+    }
+
+
+    /**
+     * {@link SectionType} sections for the initial screen
+     */
+
+    private enum SectionType {
+        Favourites(R.drawable.ic_star_white, PlaceholderFragment.newInstance(1)),
+        Home(R.drawable.ic_directions_bus_white, PlaceholderFragment.newInstance(2)),
+        Status(R.drawable.ic_http_white, PlaceholderFragment.newInstance(3));
+
+        @DrawableRes
+        private final int tabIcon;
+        private final BaseFragment sectionFragment;
+
+        SectionType(@DrawableRes final int tabIcon, @NonNull final BaseFragment fragment) {
+            this.tabIcon = tabIcon;
+            this.sectionFragment = fragment;
+        }
+    }
 
     /**
      * Inner classes
@@ -138,34 +181,20 @@ public class MainViewModel extends BaseViewModel {
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        private final SectionType[] sections = SectionType.values();
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return sections[position].sectionFragment;
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-            }
-            return null;
+            return sections.length;
         }
     }
 }

@@ -25,10 +25,8 @@ public class MainActivity extends BaseViewModelActivity {
 
     @Bind(R.id.container)
     ViewPager viewPager;
-
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-
     @Bind(R.id.tablayout)
     TabLayout tabLayout;
 
@@ -50,6 +48,7 @@ public class MainActivity extends BaseViewModelActivity {
             viewPager.setAdapter(sectionsPagerAdapter);
             tabLayout.setTabsFromPagerAdapter(sectionsPagerAdapter);
             tabLayout.setupWithViewPager(viewPager);
+            mainViewModel.refreshTabs();
         }
 
     }
@@ -57,7 +56,10 @@ public class MainActivity extends BaseViewModelActivity {
     @Nullable
     @Override
     protected BaseViewModel createViewModel(@Nullable final BaseViewModel.BaseState savedViewModelState) {
-        mainViewModel = new MainViewModel(savedViewModelState, getSupportFragmentManager());
+        mainViewModel = new MainViewModel(
+                savedViewModelState,
+                getSupportFragmentManager(),
+                tabLayout);
         return mainViewModel;
     }
 
