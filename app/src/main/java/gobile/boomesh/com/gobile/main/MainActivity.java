@@ -33,7 +33,7 @@ public class MainActivity extends BaseViewModelActivity {
     TabLayout tabLayout;
 
     @Nullable
-    MainViewModel mainViewModel;
+    private MainViewModel mainViewModel;
 
 
     /**

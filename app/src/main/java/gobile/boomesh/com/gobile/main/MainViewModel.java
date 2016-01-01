@@ -17,6 +17,8 @@ import gobile.boomesh.com.gobile.base.BaseFragment;
 import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModel;
 
 /**
+ * View model representation of {@link MainActivity}.
+ * <p/>
  * Created by sumesh on 12/31/15.
  */
 public class MainViewModel extends BaseViewModel {
@@ -24,8 +26,8 @@ public class MainViewModel extends BaseViewModel {
     private final FragmentManager fragmentManager;
     private SectionsPagerAdapter pagerAdapter;
 
-    protected MainViewModel(@Nullable final BaseState savedViewState,
-                            @NonNull final FragmentManager supportFragmentManager) {
+    MainViewModel(@Nullable final BaseState savedViewState,
+                  @NonNull final FragmentManager supportFragmentManager) {
         super(savedViewState);
         this.fragmentManager = supportFragmentManager;
     }
@@ -69,11 +71,11 @@ public class MainViewModel extends BaseViewModel {
             }
         };
 
-        protected MainViewState(@NonNull BaseViewModel viewModel) {
+        MainViewState(@NonNull BaseViewModel viewModel) {
             super(viewModel);
         }
 
-        protected MainViewState(Parcel in) {
+        MainViewState(Parcel in) {
             super(in);
         }
 
@@ -82,6 +84,7 @@ public class MainViewModel extends BaseViewModel {
             return 0;
         }
 
+        @SuppressWarnings("EmptyMethod")
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
