@@ -28,7 +28,7 @@ public class SettingsViewModel extends BaseViewModel {
     @Inject
     SharedPreferences preferences;
 
-    
+
     //region Instance methods
 
     public SettingsViewModel(@NonNull final Context context,
