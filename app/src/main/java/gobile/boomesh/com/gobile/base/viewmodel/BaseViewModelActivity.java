@@ -21,9 +21,7 @@ public abstract class BaseViewModelActivity extends BaseActivity {
     private BaseViewModel viewModel;
 
 
-    /**
-     * Life-cycle methods
-     */
+    //region Life-cycle methods
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +58,11 @@ public abstract class BaseViewModelActivity extends BaseActivity {
         }
     }
 
+    //endregion
+
+
+    //region Subclass methods
+
     /**
      * Child classes must create the view model instance.
      *
@@ -68,4 +71,6 @@ public abstract class BaseViewModelActivity extends BaseActivity {
      */
     @Nullable
     protected abstract BaseViewModel createViewModel(@Nullable final BaseViewModel.BaseState savedViewModelState);
+
+    //endregion
 }

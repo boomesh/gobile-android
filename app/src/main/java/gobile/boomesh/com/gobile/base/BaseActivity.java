@@ -17,9 +17,7 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
 
 
-    /**
-     * Life cycle methods
-     */
+    //region Life cycle methods
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,18 +26,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
+    //endregion
 
-    /**
-     * Subclass methods
-     */
+
+    //region Sub class methods
 
     /**
      * Supply a content layout xml for the activity
      *
      * @return the layout id of the content view
      */
-    //TODO remove warning
-    @SuppressWarnings("SameReturnValue")
     @LayoutRes
     protected abstract int getContentViewLayoutID();
+
+    //endregion
 }

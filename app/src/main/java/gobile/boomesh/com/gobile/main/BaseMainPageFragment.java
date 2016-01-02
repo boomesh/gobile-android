@@ -9,6 +9,12 @@ import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModelFragment;
  * Created by sumesh on 1/1/16.
  */
 public abstract class BaseMainPageFragment extends BaseViewModelFragment {
+
+
+    //region Subclass methods
+
     @DrawableRes
     public abstract int getTabIcon();
+
+    //endregion
 }

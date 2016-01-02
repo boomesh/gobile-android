@@ -15,7 +15,6 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import gobile.boomesh.com.gobile.BuildConfig;
 import gobile.boomesh.com.gobile.R;
-import gobile.boomesh.com.gobile.base.BaseActivity;
 import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModel;
 import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModelActivity;
 
@@ -32,9 +31,7 @@ public class MainActivity extends BaseViewModelActivity {
     private MainViewModel mainViewModel;
 
 
-    /**
-     * Life-cycle methods
-     */
+    //region Life-cycle methods
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,20 +48,10 @@ public class MainActivity extends BaseViewModelActivity {
 
     }
 
-    @Nullable
-    @Override
-    protected BaseViewModel createViewModel(@Nullable final BaseViewModel.BaseState savedViewModelState) {
-        mainViewModel = new MainViewModel(
-                savedViewModelState,
-                this,
-                tabLayout);
-        return mainViewModel;
-    }
+    //endregion
 
 
-    /**
-     * {@link butterknife.ButterKnife} methods
-     */
+    //region ButterKnife methods
 
     @OnClick(R.id.fab)
     void onFabClicked(final View view) {
@@ -72,10 +59,10 @@ public class MainActivity extends BaseViewModelActivity {
                 .setAction("Action", null).show();
     }
 
+    //endregion
 
-    /**
-     * {@link BaseActivity} methods
-     */
+
+    //region BaseViewModelActivity methods
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,4 +84,16 @@ public class MainActivity extends BaseViewModelActivity {
     protected int getContentViewLayoutID() {
         return R.layout.activity_main;
     }
+
+    @Nullable
+    @Override
+    protected BaseViewModel createViewModel(@Nullable final BaseViewModel.BaseState savedViewModelState) {
+        mainViewModel = new MainViewModel(
+                savedViewModelState,
+                this,
+                tabLayout);
+        return mainViewModel;
+    }
+
+    //endregion
 }

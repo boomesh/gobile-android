@@ -17,6 +17,8 @@ import android.support.annotation.Nullable;
  */
 public abstract class BaseViewModel extends BaseObservable {
 
+    //region Instance methods
+
     @SuppressWarnings("UnusedParameters")
     protected BaseViewModel(@Nullable final BaseState savedViewState) {
     }
@@ -81,4 +83,6 @@ public abstract class BaseViewModel extends BaseObservable {
         public void writeToParcel(Parcel dest, int flags) {
         }
     }
+
+    //endregion
 }

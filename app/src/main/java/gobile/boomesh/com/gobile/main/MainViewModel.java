@@ -41,6 +41,9 @@ public class MainViewModel extends BaseViewModel {
             PlaceholderFragment.newInstance(2));
     private SectionsPagerAdapter pagerAdapter;
 
+
+    //region Instance methods
+
     MainViewModel(@Nullable final BaseState savedViewState,
                   @NonNull final BaseActivity activity,
                   @NonNull final TabLayout tabLayout) {
@@ -62,15 +65,8 @@ public class MainViewModel extends BaseViewModel {
         return pagerAdapter;
     }
 
-    /**
-     * {@link BaseViewModel} methods
-     */
 
-    @Override
-    public BaseState getViewState() {
-        return new MainViewState(this);
-    }
-
+    //region View calling ViewModel methods
 
     /**
      * Method for consuming {@link MainActivity#onOptionsItemSelected(MenuItem)} events
@@ -108,9 +104,22 @@ public class MainViewModel extends BaseViewModel {
         }
     }
 
-    /**
-     * Inner classes
-     */
+    //endregion
+
+    //endregion
+
+
+    //region BaseViewModel methods
+
+    @Override
+    public BaseState getViewState() {
+        return new MainViewState(this);
+    }
+
+    //endregion
+
+
+    //region Inner classes
 
     private static class MainViewState extends BaseState {
 
@@ -144,10 +153,6 @@ public class MainViewModel extends BaseViewModel {
         }
     }
 
-
-    /**
-     * Inner classes
-     */
 
     public static class PlaceholderFragment extends BaseMainPageFragment {
         /**
@@ -217,4 +222,6 @@ public class MainViewModel extends BaseViewModel {
             return pages.size();
         }
     }
+
+    //endregion
 }

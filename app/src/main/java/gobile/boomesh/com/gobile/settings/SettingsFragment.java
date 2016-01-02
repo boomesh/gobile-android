@@ -26,9 +26,7 @@ public class SettingsFragment extends BaseViewModelFragment {
     private SettingsViewModel settingsViewModel;
 
 
-    /**
-     * instance methods
-     */
+    //region Lifecycle methods
 
     public static SettingsFragment newInstance() {
         final Bundle args = new Bundle();
@@ -37,10 +35,10 @@ public class SettingsFragment extends BaseViewModelFragment {
         return fragment;
     }
 
+    //endregion
 
-    /**
-     * Life cycle methods
-     */
+
+    //region Instance methods
 
     @Nullable
     @Override
@@ -56,10 +54,10 @@ public class SettingsFragment extends BaseViewModelFragment {
         return view;
     }
 
+    //endregion
 
-    /**
-     * {@link butterknife.ButterKnife} methods
-     */
+
+    //region ButterKnife methods
 
     @OnCheckedChanged(R.id.leak_canary_sw)
     void onLeakCanaryCheckedChanged(final boolean isChecked) {
@@ -68,10 +66,10 @@ public class SettingsFragment extends BaseViewModelFragment {
         }
     }
 
+    //endregion
 
-    /**
-     * {@link BaseViewModelFragment} methods
-     */
+
+    //region BaseViewModelFragment methods
 
     @NonNull
     @Override
@@ -90,4 +88,6 @@ public class SettingsFragment extends BaseViewModelFragment {
         settingsViewModel = new SettingsViewModel(getContext(), savedViewModelState);
         return settingsViewModel;
     }
+
+    //endregion
 }

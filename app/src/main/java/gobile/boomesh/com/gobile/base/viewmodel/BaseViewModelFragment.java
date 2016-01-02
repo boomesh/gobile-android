@@ -21,9 +21,7 @@ public abstract class BaseViewModelFragment extends BaseFragment {
     private BaseViewModel viewModel;
 
 
-    /**
-     * Life cycle methods
-     */
+    //region Lifecycle methods
 
     @Override
     public final void onCreate(Bundle savedInstanceState) {
@@ -60,10 +58,10 @@ public abstract class BaseViewModelFragment extends BaseFragment {
         }
     }
 
+    //endregion
 
-    /**
-     * Subclass methods
-     */
+
+    //region Subclass methods
 
     /**
      * Child classes must create the view model instance.
@@ -73,4 +71,6 @@ public abstract class BaseViewModelFragment extends BaseFragment {
      */
     @Nullable
     protected abstract BaseViewModel createViewModel(@Nullable final BaseViewModel.BaseState savedViewModelState);
+
+    //endregion
 }

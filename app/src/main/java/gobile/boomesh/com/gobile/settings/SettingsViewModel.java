@@ -28,12 +28,18 @@ public class SettingsViewModel extends BaseViewModel {
     @Inject
     SharedPreferences preferences;
 
+    
+    //region Instance methods
+
     public SettingsViewModel(@NonNull final Context context,
                              @Nullable final BaseState savedViewState) {
         super(savedViewState);
         appContext = context.getApplicationContext();
         App.get(context).getAppComponent().inject(this);
     }
+
+
+    //region View calling ViewModel methods
 
     public void onLeakCanaryCheckedChanged(final boolean isChecked) {
         if (isLeakCanaryOn() == isChecked) {
@@ -56,31 +62,28 @@ public class SettingsViewModel extends BaseViewModel {
         editor.apply();
     }
 
+    //endregion
 
-    /**
-     * {@link Bindable} methods
-     */
 
+    //region Bindable methods
     @Bindable
     public boolean isLeakCanaryOn() {
         return preferences.getBoolean(Consts.PREFS_LEAK_CANARY_ON, false);
     }
+    //endregion
+
+    //endregion
 
 
-    /**
-     * {@link BaseViewModel} methods
-     */
-
+    //region BaseViewModel methods
     @Override
     public BaseState getViewState() {
         return new SettingsState(this);
     }
+    //endregion
 
 
-    /**
-     * Inner classes
-     */
-
+    //region Inner classes
     private static class SettingsState extends BaseState {
         public static final Creator<SettingsState> CREATOR = new Creator<SettingsState>() {
             public SettingsState createFromParcel(Parcel source) {
@@ -106,4 +109,5 @@ public class SettingsViewModel extends BaseViewModel {
             return 0;
         }
     }
+    //endregion
 }

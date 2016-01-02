@@ -25,6 +25,8 @@ public abstract class BaseSingleFragmentActivity extends BaseViewModelActivity {
     Toolbar toolbar;
 
 
+    //region Lifecycle methods
+
     /**
      * Subclass methods should not override this.  Rely on other life cycle methods.
      * {@inheritDoc}
@@ -34,6 +36,23 @@ public abstract class BaseSingleFragmentActivity extends BaseViewModelActivity {
         super.onCreate(savedInstanceState);
         setupAppBar();
     }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        if (savedInstanceState == null) {
+            final BaseFragment baseFragment = newFragmentInstance();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.content, baseFragment, baseFragment.getFragmentTag())
+                    .commit();
+        }
+    }
+
+    //endregion
+
+
+    //region Instance methods
 
     private void setupAppBar() {
         setSupportActionBar(toolbar);
@@ -60,22 +79,10 @@ public abstract class BaseSingleFragmentActivity extends BaseViewModelActivity {
         actionBar.setDisplayHomeAsUpEnabled(isUpShown());
     }
 
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        if (savedInstanceState == null) {
-            final BaseFragment baseFragment = newFragmentInstance();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.content, baseFragment, baseFragment.getFragmentTag())
-                    .commit();
-        }
-    }
+    //endregion
 
 
-    /**
-     * Subclass methods
-     */
+    //region Subclass methods
 
     /**
      * Subclasses must provide a fragment, that will serve as the view for the activity
@@ -104,9 +111,10 @@ public abstract class BaseSingleFragmentActivity extends BaseViewModelActivity {
         return false;
     }
 
-    /**
-     * {@link BaseViewModelActivity} methods
-     */
+    //endregion
+
+
+    //region BaseViewModelActivity
 
     /**
      * {@inheritDoc}
@@ -115,12 +123,16 @@ public abstract class BaseSingleFragmentActivity extends BaseViewModelActivity {
     protected final int getContentViewLayoutID() {
         return R.layout.activity_base_single_fragment;
     }
-
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Nullable
     @Override
     protected BaseViewModel createViewModel(BaseViewModel.BaseState savedViewModelState) {
         // By default, no view model
         return null;
     }
+
+    //endregion
 }

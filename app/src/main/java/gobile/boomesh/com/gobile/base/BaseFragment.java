@@ -23,14 +23,11 @@ import gobile.boomesh.com.gobile.App;
  */
 public abstract class BaseFragment extends Fragment {
 
-    @SuppressWarnings("WeakerAccess")
     @Inject
     RefWatcher refWatcher;
 
 
-    /**
-     * Life cycle methods
-     */
+    //region Lifecycle methods
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,10 +50,10 @@ public abstract class BaseFragment extends Fragment {
         refWatcher.watch(this);
     }
 
+    //endregion
 
-    /**
-     * Subclass methods
-     */
+
+    //region Subclass methods
 
     /**
      * Used in fragment transactions.
@@ -73,4 +70,6 @@ public abstract class BaseFragment extends Fragment {
      */
     @LayoutRes
     protected abstract int getLayoutResID();
+
+    //endregion
 }

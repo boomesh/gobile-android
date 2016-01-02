@@ -13,9 +13,7 @@ import gobile.boomesh.com.gobile.base.BaseSingleFragmentActivity;
 public class SettingsActivity extends BaseSingleFragmentActivity {
 
 
-    /**
-     * {@link BaseSingleFragmentActivity} methods
-     */
+    //region BaseSingleFragmentActivity methods
 
     @NonNull
     @Override
@@ -32,4 +30,6 @@ public class SettingsActivity extends BaseSingleFragmentActivity {
     protected boolean isUpShown() {
         return true;
     }
+
+    //endregion
 }
