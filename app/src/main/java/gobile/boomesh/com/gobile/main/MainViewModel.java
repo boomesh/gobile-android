@@ -1,5 +1,6 @@
 package gobile.boomesh.com.gobile.main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,10 +8,12 @@ import android.os.Parcel;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +27,7 @@ import gobile.boomesh.com.gobile.R;
 import gobile.boomesh.com.gobile.base.BaseActivity;
 import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModel;
 import gobile.boomesh.com.gobile.settings.SettingsActivity;
+import gobile.boomesh.com.gobile.utils.customtabs.CustomTabActivityHelper;
 
 /**
  * View model representation of {@link MainActivity}.
@@ -39,6 +43,13 @@ public class MainViewModel extends BaseViewModel {
     private final List<BaseMainPageFragment> pages = Arrays.asList(
             PlaceholderFragment.newInstance(1),
             PlaceholderFragment.newInstance(2));
+    private final CustomTabActivityHelper customTabActivityHelper;
+    private final CustomTabActivityHelper.CustomTabFallback customTabFallback = new CustomTabActivityHelper.CustomTabFallback() {
+        @Override
+        public void openUri(final Activity activity, Uri uri) {
+            activity.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+        }
+    };
     private SectionsPagerAdapter pagerAdapter;
 
 
@@ -50,6 +61,7 @@ public class MainViewModel extends BaseViewModel {
         super(savedViewState);
         this.activity = activity;
         this.tabLayout = tabLayout;
+        this.customTabActivityHelper = new CustomTabActivityHelper();
     }
 
     /**
@@ -65,6 +77,7 @@ public class MainViewModel extends BaseViewModel {
         return pagerAdapter;
     }
 
+    //endregion
 
     //region View calling ViewModel methods
 
@@ -80,7 +93,16 @@ public class MainViewModel extends BaseViewModel {
             return true;
         } else if (menuId == R.id.action_service_status) {
             final String statusServiceUrl = activity.getString(R.string.service_status_url);
-            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(statusServiceUrl)));
+            final CustomTabsIntent.Builder intentBuilder =
+                    new CustomTabsIntent
+                            .Builder()
+                            .setToolbarColor(
+                                    ContextCompat.getColor(activity, R.color.colorPrimary))
+                            .setShowTitle(true);
+
+            CustomTabActivityHelper.openCustomTab(
+                    activity, intentBuilder.build(), Uri.parse(statusServiceUrl), customTabFallback);
+
             return true;
         }
 
@@ -106,14 +128,24 @@ public class MainViewModel extends BaseViewModel {
 
     //endregion
 
-    //endregion
-
 
     //region BaseViewModel methods
 
     @Override
     public BaseState getViewState() {
         return new MainViewState(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        customTabActivityHelper.bindCustomTabsService(activity);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        customTabActivityHelper.unbindCustomTabsService(activity);
     }
 
     //endregion
