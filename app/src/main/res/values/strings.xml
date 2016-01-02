@@ -2,8 +2,11 @@
     <string name="app_name">GOBile</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
-    <!-- Settings -->
+    <!-- Toolbar -->
+    <string name="action_service_status">Service Status</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Settings -->
     <string name="settings_label_leak_canary">Leak Canary</string>
 
     <!-- DEBUG -->

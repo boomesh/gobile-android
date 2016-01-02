@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="service_status_url">http://www.gotransit.com/publicroot/en/updates/servicestatus.aspx</string>
+</resources>

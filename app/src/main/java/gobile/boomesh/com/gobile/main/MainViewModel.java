@@ -1,8 +1,10 @@
 package gobile.boomesh.com.gobile.main;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
-import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -10,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,8 +21,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import gobile.boomesh.com.gobile.R;
-import gobile.boomesh.com.gobile.base.BaseFragment;
+import gobile.boomesh.com.gobile.base.BaseActivity;
 import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModel;
+import gobile.boomesh.com.gobile.settings.SettingsActivity;
 
 /**
  * View model representation of {@link MainActivity}.
@@ -28,16 +32,20 @@ import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModel;
  */
 public class MainViewModel extends BaseViewModel {
 
-    private final FragmentManager fragmentManager;
+    @NonNull
+    private final BaseActivity activity;
     @NonNull
     private final TabLayout tabLayout;
+    private final List<BaseMainPageFragment> pages = Arrays.asList(
+            PlaceholderFragment.newInstance(1),
+            PlaceholderFragment.newInstance(2));
     private SectionsPagerAdapter pagerAdapter;
 
     MainViewModel(@Nullable final BaseState savedViewState,
-                  @NonNull final FragmentManager supportFragmentManager,
+                  @NonNull final BaseActivity activity,
                   @NonNull final TabLayout tabLayout) {
         super(savedViewState);
-        this.fragmentManager = supportFragmentManager;
+        this.activity = activity;
         this.tabLayout = tabLayout;
     }
 
@@ -49,7 +57,7 @@ public class MainViewModel extends BaseViewModel {
     @NonNull
     public PagerAdapter getSectionsPagerAdapter() {
         if (pagerAdapter == null) {
-            pagerAdapter = new SectionsPagerAdapter(fragmentManager);
+            pagerAdapter = new SectionsPagerAdapter(activity.getSupportFragmentManager());
         }
         return pagerAdapter;
     }
@@ -63,6 +71,26 @@ public class MainViewModel extends BaseViewModel {
         return new MainViewState(this);
     }
 
+
+    /**
+     * Method for consuming {@link MainActivity#onOptionsItemSelected(MenuItem)} events
+     *
+     * @param menuId the id (specified in the menu xml) that was clicked
+     * @return {@code true} to say the menu item was consumed.  {@code false} otherwise.
+     */
+    public boolean onOptionsItemSelected(@IdRes final int menuId) {
+        if (menuId == R.id.action_settings) {
+            activity.startActivity(new Intent(activity, SettingsActivity.class));
+            return true;
+        } else if (menuId == R.id.action_service_status) {
+            final String statusServiceUrl = activity.getString(R.string.service_status_url);
+            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(statusServiceUrl)));
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Refresh the tabs (after they have been set)
      */
@@ -72,30 +100,11 @@ public class MainViewModel extends BaseViewModel {
             return;
         }
 
-        final SectionType[] sections = SectionType.values();
         for (int i = 0; i < tabCount; i++) {
             final TabLayout.Tab tab = tabLayout.getTabAt(i);
             if (tab != null) {
-                tab.setIcon(sections[i].tabIcon);
+                tab.setIcon(pages.get(i).getTabIcon());
             }
-        }
-    }
-
-
-    /**
-     * {@link SectionType} sections for the initial screen
-     */
-
-    private enum SectionType {
-        Favourites(R.drawable.ic_star_white),
-        Home(R.drawable.ic_directions_bus_white),
-        Status(R.drawable.ic_info_white);
-
-        @DrawableRes
-        private final int tabIcon;
-
-        SectionType(@DrawableRes final int tabIcon) {
-            this.tabIcon = tabIcon;
         }
     }
 
@@ -140,7 +149,7 @@ public class MainViewModel extends BaseViewModel {
      * Inner classes
      */
 
-    public static class PlaceholderFragment extends BaseFragment {
+    public static class PlaceholderFragment extends BaseMainPageFragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -154,7 +163,7 @@ public class MainViewModel extends BaseViewModel {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static BaseFragment newInstance(int sectionNumber) {
+        public static BaseMainPageFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -178,15 +187,22 @@ public class MainViewModel extends BaseViewModel {
         protected int getLayoutResID() {
             return R.layout.fragment_main;
         }
+
+        @Override
+        public int getTabIcon() {
+            final int section = getArguments().getInt(ARG_SECTION_NUMBER);
+            return section == 1 ? R.drawable.ic_directions_bus_white : R.drawable.ic_star_white;
+        }
+
+        @Nullable
+        @Override
+        protected BaseViewModel createViewModel(@Nullable BaseState savedViewModelState) {
+            //this fragment will be replaced eventually
+            return null;
+        }
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        private final SectionType[] sections = SectionType.values();
-        private final List<BaseFragment> pages = Arrays.asList(
-                PlaceholderFragment.newInstance(1),
-                PlaceholderFragment.newInstance(2),
-                PlaceholderFragment.newInstance(3));
-
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -198,7 +214,7 @@ public class MainViewModel extends BaseViewModel {
 
         @Override
         public int getCount() {
-            return sections.length;
+            return pages.size();
         }
     }
 }
