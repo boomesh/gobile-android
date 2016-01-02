@@ -5,6 +5,7 @@
       <w>bindable</w>
       <w>boomesh</w>
       <w>consts</w>
+      <w>customtabs</w>
       <w>gobile</w>
       <w>googling</w>
       <w>mvvm</w>
@@ -14,6 +15,7 @@
       <w>servicestatus</w>
       <w>sumesh</w>
       <w>tablayout</w>
+      <w>warmup</w>
     </words>
   </dictionary>
 </component>

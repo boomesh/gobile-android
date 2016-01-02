@@ -22,7 +22,7 @@ public class CustomTabActivityHelper {
     private ConnectionCallback mConnectionCallback;
 
     /**
-     * Opens the URL on a Custom Tab if possible. Otherwise fallsback to opening it on a WebView
+     * Opens the URL on a Custom Tab if possible. Otherwise fallback to opening it on a WebView
      *
      * @param activity         The host activity
      * @param customTabsIntent a CustomTabsIntent to be used if Custom Tabs is available
@@ -36,7 +36,7 @@ public class CustomTabActivityHelper {
         String packageName = CustomTabsHelper.getPackageNameToUse(activity);
 
         //If we cant find a package name, it means there's no browser that supports
-        //Chrome Custom Tabs installed. So, we fallback to the webview
+        //Chrome Custom Tabs installed. So, we fallback
         if (packageName == null) {
             if (fallback != null) {
                 fallback.openUri(activity, uri);
@@ -64,7 +64,7 @@ public class CustomTabActivityHelper {
      *
      * @return a CustomTabsSession
      */
-    public CustomTabsSession getSession() {
+    private CustomTabsSession getSession() {
         if (mClient == null) {
             mCustomTabsSession = null;
         } else if (mCustomTabsSession == null) {
@@ -76,8 +76,10 @@ public class CustomTabActivityHelper {
     /**
      * Register a Callback to be called when connected or disconnected from the Custom Tabs Service
      *
-     * @param connectionCallback
+     * @param connectionCallback the subscriber will be responding to connection/disconnection
+     *                           events
      */
+    @SuppressWarnings("unused")
     public void setConnectionCallback(ConnectionCallback connectionCallback) {
         this.mConnectionCallback = connectionCallback;
     }
@@ -85,7 +87,7 @@ public class CustomTabActivityHelper {
     /**
      * Binds the Activity to the Custom Tabs Service
      *
-     * @param activity the activity to be binded to the service
+     * @param activity the activity to be bound to the service
      */
     public void bindCustomTabsService(Activity activity) {
         if (mClient != null) return;
@@ -111,19 +113,20 @@ public class CustomTabActivityHelper {
         CustomTabsClient.bindCustomTabsService(activity, packageName, mConnection);
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public boolean mayLaunchUrl(Uri uri, Bundle extras, List<Bundle> otherLikelyBundles) {
         if (mClient == null) return false;
 
         CustomTabsSession session = getSession();
-        if (session == null) return false;
+        return session != null && session.mayLaunchUrl(uri, extras, otherLikelyBundles);
 
-        return session.mayLaunchUrl(uri, extras, otherLikelyBundles);
     }
 
     /**
      * A Callback for when the service is connected or disconnected. Use those callbacks to
      * handle UI changes when the service is connected or disconnected
      */
+    @SuppressWarnings("unused")
     public interface ConnectionCallback {
         /**
          * Called when the service is connected

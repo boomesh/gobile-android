@@ -17,23 +17,22 @@ import java.util.List;
  * Helper class for Custom Tabs.
  * Code gotten from: https://github.com/hitherejoe/Tabby/blob/master/app/src/main/java/com/hitherejoe/tabby/util/CustomTabsHelper.java
  */
-public class CustomTabsHelper {
-    static  String STABLE_PACKAGE = "com.android.chrome";
-    static  String BETA_PACKAGE = "com.chrome.beta";
-    static  String DEV_PACKAGE = "com.chrome.dev";
-    static  String LOCAL_PACKAGE = "com.google.android.apps.chrome";
-    private static  String TAG = "CustomTabsHelper";
-    private static  String EXTRA_CUSTOM_TABS_KEEP_ALIVE =
-            "android.support.customtabs.extra.KEEP_ALIVE";
+class CustomTabsHelper {
+    private static final String STABLE_PACKAGE = "com.android.chrome";
+    private static final String BETA_PACKAGE = "com.chrome.beta";
+    private static final String DEV_PACKAGE = "com.chrome.dev";
+    private static final String LOCAL_PACKAGE = "com.google.android.apps.chrome";
 
     private static String sPackageNameToUse;
 
     private CustomTabsHelper() {
     }
 
+    @SuppressWarnings("unused")
     public static void addKeepAliveExtra(Context context, Intent intent) {
         Intent keepAliveIntent = new Intent().setClassName(
                 context.getPackageName(), KeepAliveService.class.getCanonicalName());
+        String EXTRA_CUSTOM_TABS_KEEP_ALIVE = "android.support.customtabs.extra.KEEP_ALIVE";
         intent.putExtra(EXTRA_CUSTOM_TABS_KEEP_ALIVE, keepAliveIntent);
     }
 
@@ -116,6 +115,7 @@ public class CustomTabsHelper {
                 return true;
             }
         } catch (RuntimeException e) {
+            String TAG = "CustomTabsHelper";
             Log.e(TAG, "Runtime exception while getting specialized handlers");
         }
         return false;
@@ -124,6 +124,7 @@ public class CustomTabsHelper {
     /**
      * @return All possible chrome package names that provide custom tabs feature.
      */
+    @SuppressWarnings("unused")
     public static String[] getPackages() {
         return new String[]{"", STABLE_PACKAGE, BETA_PACKAGE, DEV_PACKAGE, LOCAL_PACKAGE};
     }

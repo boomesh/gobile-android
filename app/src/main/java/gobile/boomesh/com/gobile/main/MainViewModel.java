@@ -50,6 +50,7 @@ public class MainViewModel extends BaseViewModel {
             activity.startActivity(new Intent(Intent.ACTION_VIEW, uri));
         }
     };
+    private final Uri serviceStatusWebUri;
     private SectionsPagerAdapter pagerAdapter;
 
 
@@ -62,6 +63,7 @@ public class MainViewModel extends BaseViewModel {
         this.activity = activity;
         this.tabLayout = tabLayout;
         this.customTabActivityHelper = new CustomTabActivityHelper();
+        this.serviceStatusWebUri = Uri.parse(activity.getString(R.string.service_status_url));
     }
 
     /**
@@ -92,7 +94,6 @@ public class MainViewModel extends BaseViewModel {
             activity.startActivity(new Intent(activity, SettingsActivity.class));
             return true;
         } else if (menuId == R.id.action_service_status) {
-            final String statusServiceUrl = activity.getString(R.string.service_status_url);
             final CustomTabsIntent.Builder intentBuilder =
                     new CustomTabsIntent
                             .Builder()
@@ -101,7 +102,7 @@ public class MainViewModel extends BaseViewModel {
                             .setShowTitle(true);
 
             CustomTabActivityHelper.openCustomTab(
-                    activity, intentBuilder.build(), Uri.parse(statusServiceUrl), customTabFallback);
+                    activity, intentBuilder.build(), serviceStatusWebUri, customTabFallback);
 
             return true;
         }
@@ -140,6 +141,7 @@ public class MainViewModel extends BaseViewModel {
     public void onStart() {
         super.onStart();
         customTabActivityHelper.bindCustomTabsService(activity);
+        customTabActivityHelper.mayLaunchUrl(serviceStatusWebUri, null, null);
     }
 
     @Override

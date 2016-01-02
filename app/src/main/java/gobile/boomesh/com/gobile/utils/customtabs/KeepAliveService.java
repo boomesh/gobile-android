@@ -11,7 +11,7 @@ import android.os.IBinder;
  * Code gotten from: https://github.com/hitherejoe/Tabby/blob/master/app/src/main/java/com/hitherejoe/tabby/util/KeepAliveService.java
  */
 public class KeepAliveService extends Service {
-    private static  Binder sBinder = new Binder();
+    private static final Binder sBinder = new Binder();
 
     @Override
     public IBinder onBind(Intent intent) {
