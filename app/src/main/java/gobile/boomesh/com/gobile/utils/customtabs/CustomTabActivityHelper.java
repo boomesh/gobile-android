@@ -113,7 +113,7 @@ public class CustomTabActivityHelper {
         CustomTabsClient.bindCustomTabsService(activity, packageName, mConnection);
     }
 
-    @SuppressWarnings("UnusedReturnValue")
+    @SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
     public boolean mayLaunchUrl(Uri uri, Bundle extras, List<Bundle> otherLikelyBundles) {
         if (mClient == null) return false;
 

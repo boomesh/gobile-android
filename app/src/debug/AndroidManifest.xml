@@ -5,6 +5,8 @@
 
     <application
         android:name=".DebugApp"
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/scheme_backup"
         tools:replace="android:name" />
 
 </manifest>
