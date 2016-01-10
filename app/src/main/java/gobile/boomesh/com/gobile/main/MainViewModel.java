@@ -26,12 +26,15 @@ import butterknife.Bind;
 import gobile.boomesh.com.gobile.R;
 import gobile.boomesh.com.gobile.base.BaseActivity;
 import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModel;
+import gobile.boomesh.com.gobile.main.departures.DeparturesFragment;
+import gobile.boomesh.com.gobile.main.favourites.FavouritesFragment;
+import gobile.boomesh.com.gobile.main.schedules.ScheduleBuilderFragment;
 import gobile.boomesh.com.gobile.settings.SettingsActivity;
 import gobile.boomesh.com.gobile.utils.customtabs.CustomTabActivityHelper;
 
 /**
  * View model representation of {@link MainActivity}.
- * <p/>
+ * <p>
  * Created by sumesh on 12/31/15.
  */
 public class MainViewModel extends BaseViewModel {
@@ -41,8 +44,9 @@ public class MainViewModel extends BaseViewModel {
     @NonNull
     private final TabLayout tabLayout;
     private final List<BaseMainPageFragment> pages = Arrays.asList(
-            PlaceholderFragment.newInstance(1),
-            PlaceholderFragment.newInstance(2));
+            DeparturesFragment.newInstance(),
+            FavouritesFragment.newInstance(),
+            ScheduleBuilderFragment.newInstance());
     private final CustomTabActivityHelper customTabActivityHelper;
     private final CustomTabActivityHelper.CustomTabFallback customTabFallback = new CustomTabActivityHelper.CustomTabFallback() {
         @Override
@@ -184,60 +188,6 @@ public class MainViewModel extends BaseViewModel {
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
-        }
-    }
-
-
-    public static class PlaceholderFragment extends BaseMainPageFragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        @Bind(R.id.section_label)
-        TextView textView;
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static BaseMainPageFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-            super.onViewCreated(view, savedInstanceState);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-        }
-
-        @NonNull
-        @Override
-        public String getFragmentTag() {
-            return PlaceholderFragment.class.getSimpleName();
-        }
-
-        @Override
-        protected int getLayoutResID() {
-            return R.layout.fragment_main;
-        }
-
-        @Override
-        public int getTabIcon() {
-            final int section = getArguments().getInt(ARG_SECTION_NUMBER);
-            return section == 1 ? R.drawable.ic_directions_bus_white : R.drawable.ic_star_white;
-        }
-
-        @Nullable
-        @Override
-        protected BaseViewModel createViewModel(@Nullable BaseState savedViewModelState) {
-            //this fragment will be replaced eventually
-            return null;
         }
     }
 

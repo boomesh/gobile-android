@@ -9,6 +9,12 @@
     <!-- Settings -->
     <string name="settings_label_leak_canary">Leak Canary</string>
 
+    <!-- Schedule Builder-->
+    <string name="select_line">Line</string>
+    <string name="stops">Stops</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
+
     <!-- DEBUG -->
     <string name="debug_toast_restart_app">You must restart %s app to see changes.</string>
 
