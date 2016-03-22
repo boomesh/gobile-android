@@ -50,18 +50,6 @@ public abstract class BaseViewModel extends BaseObservable {
      */
     public static class BaseState implements Parcelable {
 
-        public static final Creator<BaseState> CREATOR = new Creator<BaseState>() {
-            @Override
-            public BaseState createFromParcel(Parcel in) {
-                return new BaseState(in);
-            }
-
-            @Override
-            public BaseState[] newArray(int size) {
-                return new BaseState[size];
-            }
-        };
-
         @SuppressWarnings("UnusedParameters")
         protected BaseState(@NonNull final BaseViewModel viewModel) {
 

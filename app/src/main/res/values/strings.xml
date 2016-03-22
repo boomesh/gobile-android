@@ -14,6 +14,7 @@
     <string name="stops">Stops</string>
     <string name="start">Start</string>
     <string name="end">End</string>
+    <string name="select_time">Time</string>
 
     <!-- DEBUG -->
     <string name="debug_toast_restart_app">You must restart %s app to see changes.</string>

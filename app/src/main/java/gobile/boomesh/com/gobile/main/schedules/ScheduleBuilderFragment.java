@@ -3,9 +3,7 @@ package gobile.boomesh.com.gobile.main.schedules;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -14,6 +12,9 @@ import gobile.boomesh.com.gobile.base.viewmodel.BaseViewModel;
 import gobile.boomesh.com.gobile.main.BaseMainPageFragment;
 
 /**
+ * Fragment class for the schedule builder tab.  View configuring logic should sit here and the
+ * xml.
+ * <p>
  * Created by sumesh on 1/5/16.
  */
 public class ScheduleBuilderFragment extends BaseMainPageFragment {
@@ -25,6 +26,7 @@ public class ScheduleBuilderFragment extends BaseMainPageFragment {
     Spinner startSpinner;
     @Bind(R.id.end_spinner)
     Spinner endSpinner;
+    private ScheduleBuilderViewModel viewModel;
 
     public static ScheduleBuilderFragment newInstance() {
 
@@ -36,34 +38,19 @@ public class ScheduleBuilderFragment extends BaseMainPageFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final SpinnerAdapter linesAdapter = new ArrayAdapter<>(
-                getContext(),
-                android.R.layout.simple_list_item_1,
-                new String[]{"Hello", "there", "my", "name", "is", "galloom"});
-        final SpinnerAdapter startStopsAdapter = new ArrayAdapter<>(
-                getContext(),
-                android.R.layout.simple_list_item_1,
-                new String[]{"a", "b", "c", "d", "e", "f"});
-        final SpinnerAdapter endStopsAdapter = new ArrayAdapter<>(
-                getContext(),
-                android.R.layout.simple_list_item_1,
-                new String[]{"1", "2", "3", "4", "5", "6"});
-
-        lineSpinner.setAdapter(linesAdapter);
-        startSpinner.setAdapter(startStopsAdapter);
-        endSpinner.setAdapter(endStopsAdapter);
+        lineSpinner.setAdapter(viewModel.getLineAdapter());
+        startSpinner.setAdapter(viewModel.getStartStopAdapter());
+        endSpinner.setAdapter(viewModel.getEndStopAdapter());
     }
 
     //region ButterKnife methods
     @OnClick(R.id.switch_start_end_btn)
     void onSwitchStopsButtonClicked() {
-        final SpinnerAdapter startAdapter = startSpinner.getAdapter();
-        final SpinnerAdapter endAdapter = endSpinner.getAdapter();
-
-        endSpinner.setAdapter(startAdapter);
-        startSpinner.setAdapter(endAdapter);
+        viewModel.swapStartEndStops();
+        endSpinner.setAdapter(viewModel.getEndStopAdapter());
+        startSpinner.setAdapter(viewModel.getStartStopAdapter());
     }
     //endregion
 
@@ -77,10 +64,11 @@ public class ScheduleBuilderFragment extends BaseMainPageFragment {
 
     @Nullable
     @Override
-    protected BaseViewModel createViewModel(@Nullable BaseViewModel.BaseState savedViewModelState) {
-        //TODO: for now
-        return null;
+    protected BaseViewModel createViewModel(@Nullable final BaseViewModel.BaseState savedViewModelState) {
+        viewModel = new ScheduleBuilderViewModel(getContext(), savedViewModelState);
+        return viewModel;
     }
+
 
     @NonNull
     @Override

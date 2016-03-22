@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_paddingLeft="@dimen/activity_horizontal_margin"
-    android:layout_paddingRight="@dimen/activity_horizontal_margin"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
 
     <TextView
         style="@style/sched_builder_h1_style"
@@ -54,7 +54,7 @@
             android:id="@+id/switch_start_end_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/__leak_canary_icon" />
+            android:background="@drawable/ic_compare_arrows_black" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -75,5 +75,31 @@
         </LinearLayout>
     </LinearLayout>
 
+    <TextView
+        style="@style/sched_builder_h1_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/select_time" />
+
+    <View style="@style/sched_build_divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Spinner
+            android:id="@+id/arrive_depart_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/sched_builder_h2_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/start" />
+
+    </LinearLayout>
 
 </LinearLayout>
